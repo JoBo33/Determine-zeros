@@ -2,6 +2,8 @@
 #define DETERMINEZEROSAPPLICATION_H
 
 #include <QMainWindow>
+#include "qcustomplot.h"
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class DetermineZerosApplication; }
@@ -14,6 +16,9 @@ class DetermineZerosApplication : public QMainWindow
 public:
     DetermineZerosApplication(QWidget *parent = nullptr);
     ~DetermineZerosApplication();
+    void bisection();
+    void regulaFalsi();
+    void newtonRaphson();
 
 private:
     Ui::DetermineZerosApplication *ui;
