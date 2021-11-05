@@ -8,6 +8,7 @@ int main(int argc, char *argv[])
     DetermineZerosApplication w;
     w.bisection();
     w.regulaFalsi();
+    w.newtonRaphson();
     w.show();
     return a.exec();
 }

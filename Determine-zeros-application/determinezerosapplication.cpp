@@ -66,16 +66,16 @@ void DetermineZerosApplication::regulaFalsi(){
  //   while((int)oldBoundaryX*1000 != (int)newBoundaryX*1000);
 }
 void DetermineZerosApplication::newtonRaphson(){
-  //  // example function f(x) = x³+3x²-x+8
-  //  double x = 1;
-  //  double oldX;
-  //  do{
-  //      oldX=x;
-  //      double f = function(x);
-  //      double fPrime = derivativeOfFnction(x);
-  //      x = oldX-f/fPrime;
-  //  }
-  //  while((int)x*1000 != (int)oldX*1000);
+    // example function f(x) = x³+3x²-x-8
+    double x = 1;
+    double oldX;
+    do{
+        oldX=x;
+        double f = qPow(x,3)+3*qPow(x,2)-x-8;//function(x);
+        double fPrime = 3*qPow(x,2)+6*x-1;//derivativeOfFnction(x);
+        x = oldX-f/fPrime;
+    }
+    while((int)(x*1000) != (int)(oldX*1000));
 }
 
 
