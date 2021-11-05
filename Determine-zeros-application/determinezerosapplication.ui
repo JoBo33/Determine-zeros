@@ -14,7 +14,7 @@
    <string>DetermineZerosApplication</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QCustomPlot" name="widget" native="true">
+   <widget class="QCustomPlot" name="plot" native="true">
     <property name="geometry">
      <rect>
       <x>230</x>
@@ -87,7 +87,7 @@
          <widget class="QLineEdit" name="lineEdit"/>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton">
+         <widget class="QPushButton" name="pushButtonShow">
           <property name="text">
            <string>Show</string>
           </property>

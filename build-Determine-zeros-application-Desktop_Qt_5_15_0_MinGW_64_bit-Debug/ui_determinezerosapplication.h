@@ -28,7 +28,7 @@ class Ui_DetermineZerosApplication
 {
 public:
     QWidget *centralwidget;
-    QCustomPlot *widget;
+    QCustomPlot *plot;
     QWidget *formLayoutWidget;
     QFormLayout *formLayout;
     QGroupBox *groupBox;
@@ -40,7 +40,7 @@ public:
     QGroupBox *groupBox_2;
     QVBoxLayout *verticalLayout_2;
     QLineEdit *lineEdit;
-    QPushButton *pushButton;
+    QPushButton *pushButtonShow;
 
     void setupUi(QMainWindow *DetermineZerosApplication)
     {
@@ -49,9 +49,9 @@ public:
         DetermineZerosApplication->resize(800, 600);
         centralwidget = new QWidget(DetermineZerosApplication);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
-        widget = new QCustomPlot(centralwidget);
-        widget->setObjectName(QString::fromUtf8("widget"));
-        widget->setGeometry(QRect(230, 20, 531, 531));
+        plot = new QCustomPlot(centralwidget);
+        plot->setObjectName(QString::fromUtf8("plot"));
+        plot->setGeometry(QRect(230, 20, 531, 531));
         formLayoutWidget = new QWidget(centralwidget);
         formLayoutWidget->setObjectName(QString::fromUtf8("formLayoutWidget"));
         formLayoutWidget->setGeometry(QRect(10, 20, 245, 521));
@@ -93,10 +93,10 @@ public:
 
         verticalLayout_2->addWidget(lineEdit);
 
-        pushButton = new QPushButton(groupBox_2);
-        pushButton->setObjectName(QString::fromUtf8("pushButton"));
+        pushButtonShow = new QPushButton(groupBox_2);
+        pushButtonShow->setObjectName(QString::fromUtf8("pushButtonShow"));
 
-        verticalLayout_2->addWidget(pushButton);
+        verticalLayout_2->addWidget(pushButtonShow);
 
 
         formLayout->setWidget(1, QFormLayout::LabelRole, groupBox_2);
@@ -116,7 +116,7 @@ public:
         radioButton_2->setText(QCoreApplication::translate("DetermineZerosApplication", "Regula falsi", nullptr));
         radioButton_3->setText(QCoreApplication::translate("DetermineZerosApplication", "Newton-Raphson-method", nullptr));
         groupBox_2->setTitle(QCoreApplication::translate("DetermineZerosApplication", "Enter function", nullptr));
-        pushButton->setText(QCoreApplication::translate("DetermineZerosApplication", "Show", nullptr));
+        pushButtonShow->setText(QCoreApplication::translate("DetermineZerosApplication", "Show", nullptr));
     } // retranslateUi
 
 };

@@ -1,16 +1,38 @@
 #include "determinezerosapplication.h"
 #include "ui_determinezerosapplication.h"
 
+
 DetermineZerosApplication::DetermineZerosApplication(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::DetermineZerosApplication)
 {
     ui->setupUi(this);
+    connect(ui->plot, SIGNAL(clicked()), this, SLOT(plotter()));
 }
 
 DetermineZerosApplication::~DetermineZerosApplication()
 {
     delete ui;
+}
+
+void DetermineZerosApplication::plotter(){
+    // generate some data:
+    QVector<double> x(10000), y(10000); // initialize with entries 0..100
+    for (double i=0; i<10000; i=+0.25)
+    {
+      x[i] = i/1000-5; // x goes from -1 to 1
+      y[i] = qPow(x[i],3)+ 3*qPow(x[i],2)-x[i]-8; // let's plot a cubatic function x³+3x²-x-8
+    }
+    // create graph and assign data to it:
+    ui->plot->addGraph();
+    ui->plot->graph(0)->setData(x, y);
+    // give the axes some labels:
+    ui->plot->xAxis->setLabel("x");
+    ui->plot->yAxis->setLabel("y");
+    // set axes ranges, so we see all data:
+    ui->plot->xAxis->setRange(-10, 10);
+    ui->plot->yAxis->setRange(-50, 50);
+    ui->plot->replot();
 }
 
 void DetermineZerosApplication::bisection(){

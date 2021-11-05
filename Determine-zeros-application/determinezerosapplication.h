@@ -22,5 +22,9 @@ public:
 
 private:
     Ui::DetermineZerosApplication *ui;
+
+public slots:
+    void plotter();
+
 };
 #endif // DETERMINEZEROSAPPLICATION_H
