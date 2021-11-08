@@ -9,7 +9,7 @@ int main(int argc, char *argv[])
     w.bisection();
     w.regulaFalsi();
     w.newtonRaphson();
-    w.plotter();
+    //w.plotter();
     w.show();
     return a.exec();
 }

@@ -22,9 +22,10 @@ public:
 
 private:
     Ui::DetermineZerosApplication *ui;
-
+    std::function<double(double)> FunctionPointer;
 public slots:
     void plotter();
+    void buttonShowClicked();
 
 };
 #endif // DETERMINEZEROSAPPLICATION_H

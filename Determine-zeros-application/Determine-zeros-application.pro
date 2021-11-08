@@ -15,6 +15,7 @@ SOURCES += \
 
 HEADERS += \
     ../../../../Downloads/QCustomPlot-source.tar/qcustomplot-source/qcustomplot.h \
+    TestFunction.h \
     determinezerosapplication.h \
     qcustomplot.h
 

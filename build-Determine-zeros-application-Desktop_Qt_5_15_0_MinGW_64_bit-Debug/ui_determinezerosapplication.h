@@ -33,9 +33,9 @@ public:
     QFormLayout *formLayout;
     QGroupBox *groupBox;
     QVBoxLayout *verticalLayout;
-    QRadioButton *radioButton;
-    QRadioButton *radioButton_2;
-    QRadioButton *radioButton_3;
+    QRadioButton *radioButtonBisection;
+    QRadioButton *radioButtonRegulaFalsi;
+    QRadioButton *radioButtonNewton;
     QSpacerItem *verticalSpacer;
     QGroupBox *groupBox_2;
     QVBoxLayout *verticalLayout_2;
@@ -62,20 +62,21 @@ public:
         groupBox->setObjectName(QString::fromUtf8("groupBox"));
         verticalLayout = new QVBoxLayout(groupBox);
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
-        radioButton = new QRadioButton(groupBox);
-        radioButton->setObjectName(QString::fromUtf8("radioButton"));
+        radioButtonBisection = new QRadioButton(groupBox);
+        radioButtonBisection->setObjectName(QString::fromUtf8("radioButtonBisection"));
+        radioButtonBisection->setChecked(true);
 
-        verticalLayout->addWidget(radioButton);
+        verticalLayout->addWidget(radioButtonBisection);
 
-        radioButton_2 = new QRadioButton(groupBox);
-        radioButton_2->setObjectName(QString::fromUtf8("radioButton_2"));
+        radioButtonRegulaFalsi = new QRadioButton(groupBox);
+        radioButtonRegulaFalsi->setObjectName(QString::fromUtf8("radioButtonRegulaFalsi"));
 
-        verticalLayout->addWidget(radioButton_2);
+        verticalLayout->addWidget(radioButtonRegulaFalsi);
 
-        radioButton_3 = new QRadioButton(groupBox);
-        radioButton_3->setObjectName(QString::fromUtf8("radioButton_3"));
+        radioButtonNewton = new QRadioButton(groupBox);
+        radioButtonNewton->setObjectName(QString::fromUtf8("radioButtonNewton"));
 
-        verticalLayout->addWidget(radioButton_3);
+        verticalLayout->addWidget(radioButtonNewton);
 
 
         formLayout->setWidget(0, QFormLayout::LabelRole, groupBox);
@@ -112,9 +113,9 @@ public:
     {
         DetermineZerosApplication->setWindowTitle(QCoreApplication::translate("DetermineZerosApplication", "DetermineZerosApplication", nullptr));
         groupBox->setTitle(QCoreApplication::translate("DetermineZerosApplication", "Choose algorithm", nullptr));
-        radioButton->setText(QCoreApplication::translate("DetermineZerosApplication", "Bisection method", nullptr));
-        radioButton_2->setText(QCoreApplication::translate("DetermineZerosApplication", "Regula falsi", nullptr));
-        radioButton_3->setText(QCoreApplication::translate("DetermineZerosApplication", "Newton-Raphson-method", nullptr));
+        radioButtonBisection->setText(QCoreApplication::translate("DetermineZerosApplication", "Bisection method", nullptr));
+        radioButtonRegulaFalsi->setText(QCoreApplication::translate("DetermineZerosApplication", "Regula falsi", nullptr));
+        radioButtonNewton->setText(QCoreApplication::translate("DetermineZerosApplication", "Newton-Raphson-method", nullptr));
         groupBox_2->setTitle(QCoreApplication::translate("DetermineZerosApplication", "Enter function", nullptr));
         pushButtonShow->setText(QCoreApplication::translate("DetermineZerosApplication", "Show", nullptr));
     } // retranslateUi
