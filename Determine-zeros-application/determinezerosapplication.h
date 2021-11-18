@@ -3,7 +3,7 @@
 
 #include <QMainWindow>
 #include "qcustomplot.h"
-
+#include <tinyexprwrapperlibrary.h>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class DetermineZerosApplication; }
@@ -29,6 +29,7 @@ public:
 private:
     Ui::DetermineZerosApplication *ui;
     std::function<double(double)> FunctionPointer;
+    TinyExprWrapperLibrary *tinyExpr;
 
 public slots:
     void plotter();

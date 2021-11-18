@@ -13,12 +13,15 @@ DetermineZerosApplication::DetermineZerosApplication(QWidget *parent)
     connect(ui->radioButtonRegulaFalsi, SIGNAL(clicked()), this, SLOT(checkGroupBox()));
 
     // function f_ will be drawed
-    FunctionPointer = F1;
+    //FunctionPointer = F1;
+
+    tinyExpr = new TinyExprWrapperLibrary("");
 }
 
 DetermineZerosApplication::~DetermineZerosApplication()
 {
     delete ui;
+    delete tinyExpr;
 }
 
 void DetermineZerosApplication::checkGroupBox(){
@@ -61,6 +64,14 @@ void DetermineZerosApplication::setRange(double centre){
 
 void DetermineZerosApplication::buttonShowClicked(){
     ui->plot->clearGraphs();
+    std::string func(ui->lineEdit->text().toStdString());
+    tinyExpr = new TinyExprWrapperLibrary(func);
+    if(!tinyExpr->IsValid()){
+        QMessageBox msg(this);
+        msg.setText("Please check the the entered function.");
+        msg.exec();
+        return;
+    }
     plotter();
     addAlgorithmGraph();
     double leftBoundaryX = ui->doubleSpinBoxStart->text().toDouble();
@@ -71,15 +82,15 @@ void DetermineZerosApplication::buttonShowClicked(){
     }
     unsigned long accuracy = accuracyInput.toULong();
     if(ui->radioButtonBisection->isChecked()){
-        FunctionPointer = F3;
+        //FunctionPointer = F3;
         bisection(leftBoundaryX, rightBoundaryX, accuracy);
     }
     else if(ui->radioButtonRegulaFalsi->isChecked()){
-        FunctionPointer = F2;
+        //FunctionPointer = F2;
         regulaFalsi(leftBoundaryX, rightBoundaryX, accuracy);
     }
     else if(ui->radioButtonNewton->isChecked()){
-        FunctionPointer = F1;
+        //FunctionPointer = F1;
         newtonRaphson(leftBoundaryX, accuracy);
     }
     ui->plot->replot();
@@ -90,7 +101,7 @@ void DetermineZerosApplication::plotter(){
     QVector<double> x(1000001), y(1000001);
     for(int i=0; i<1000001; i++){
         x[i] = i/50.0 - 10000;
-        y[i] = FunctionPointer(x[i]);
+        y[i] = tinyExpr->Evaluate(x[i]);
     }
     // create graph and assign data to it:
     ui->plot->addGraph();
@@ -203,8 +214,8 @@ void DetermineZerosApplication::bisection(double leftBoundaryX, double rightBoun
     //double leftBoundaryX = 0;
     //double rightBoundaryX = 2;
 
-    double leftBoundaryF = FunctionPointer(leftBoundaryX);
-    double rightBoundaryF =FunctionPointer(rightBoundaryX);
+    double leftBoundaryF = tinyExpr->Evaluate(leftBoundaryX);
+    double rightBoundaryF = tinyExpr->Evaluate(rightBoundaryX);
     double newBoundaryX = INFINITY;
     double newBoundaryF = INFINITY;
     double oldBoundaryX;
@@ -228,7 +239,7 @@ void DetermineZerosApplication::bisection(double leftBoundaryX, double rightBoun
         }
         oldBoundaryX = newBoundaryX;
         newBoundaryX = (rightBoundaryX-leftBoundaryX)/2+leftBoundaryX;
-        newBoundaryF = FunctionPointer(newBoundaryX);
+        newBoundaryF = tinyExpr->Evaluate(newBoundaryX);
 
         fillTable(leftBoundaryX,  newBoundaryX,rightBoundaryX,leftBoundaryF, newBoundaryF, rightBoundaryF);
 
@@ -260,8 +271,8 @@ void DetermineZerosApplication::regulaFalsi(double leftBoundaryX, double rightBo
     // example function f(x) = x³-2x+2
     //double leftBoundaryX = -2;
     //double rightBoundaryX = 0;
-    double leftBoundaryF = FunctionPointer(leftBoundaryX);
-    double rightBoundaryF = FunctionPointer(rightBoundaryX);
+    double leftBoundaryF = tinyExpr->Evaluate(leftBoundaryX);
+    double rightBoundaryF = tinyExpr->Evaluate(rightBoundaryX);
     double newBoundaryX=INFINITY;
     double newBoundaryF=INFINITY;
     double oldBoundaryX;
@@ -281,7 +292,7 @@ void DetermineZerosApplication::regulaFalsi(double leftBoundaryX, double rightBo
 
         oldBoundaryX = newBoundaryX;
         newBoundaryX = (leftBoundaryX*rightBoundaryF - rightBoundaryX*leftBoundaryF)/(rightBoundaryF-leftBoundaryF);
-        newBoundaryF = FunctionPointer(newBoundaryX);
+        newBoundaryF = tinyExpr->Evaluate(newBoundaryX);
 
         fillTable(leftBoundaryX, rightBoundaryX, newBoundaryX,leftBoundaryF, rightBoundaryF, newBoundaryF);
 
@@ -308,7 +319,9 @@ void DetermineZerosApplication::regulaFalsi(double leftBoundaryX, double rightBo
 }
 void DetermineZerosApplication::newtonRaphson(double x, unsigned long accuracy){
     // example function f(x) = x³+3x²-x-8
+    // diriative = 3*qPow(x,2)+6*x-1;
     // double x = 1;
+
     double oldX;
     prepareTable(4, NewtonRaphson);
     ui->plot->graph(ui->plot->graphCount()-1)->setLineStyle(QCPGraph::lsLine);
@@ -316,10 +329,9 @@ void DetermineZerosApplication::newtonRaphson(double x, unsigned long accuracy){
     int i = -1;
 
     do{
-
         oldX=x;
-        double f = FunctionPointer(x);
-        double fPrime = hMethod(FunctionPointer,x); // 3*qPow(x,2)+6*x-1; //derivativeOfFunction(x);
+        double f = tinyExpr->Evaluate(x);
+        double fPrime = tinyExpr->Derivative(x);
 
         fillTable(x,f,fPrime);
 
@@ -335,7 +347,6 @@ void DetermineZerosApplication::newtonRaphson(double x, unsigned long accuracy){
             xValues[i]=x;
             y[i] = 0;
         }
-
     }
     while((unsigned long)(x*accuracy) != (unsigned long)(oldX*accuracy));
     while(xValues[xValues.length()-1] == 0){
