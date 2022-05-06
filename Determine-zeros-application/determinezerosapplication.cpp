@@ -67,8 +67,9 @@ void DetermineZerosApplication::buttonShowClicked(){
     std::string func(ui->lineEdit->text().toStdString());
     tinyExpr = new TinyExprWrapperLibrary(func);
     if(!tinyExpr->IsValid()){
+        int firstErrorPos = tinyExpr->error;
         QMessageBox msg(this);
-        msg.setText("Please check the the entered function.");
+        msg.setText("Please check the the entered function at position: " + QString :: number(firstErrorPos));
         msg.exec();
         return;
     }
@@ -349,7 +350,7 @@ void DetermineZerosApplication::newtonRaphson(double x, unsigned long accuracy){
         }
     }
     while((unsigned long)(x*accuracy) != (unsigned long)(oldX*accuracy));
-    while(xValues[xValues.length()-1] == 0){
+    while(xValues[xValues.length()-1] == 0 && xValues.length() > 1){
         xValues.resize(xValues.length()-1);
         y.resize(y.length()-1);
     }
